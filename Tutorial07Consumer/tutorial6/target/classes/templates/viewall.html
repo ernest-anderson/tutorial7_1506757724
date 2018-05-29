@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>View All Students</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" th:href="@{https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css}" />
+<script
+	th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js}"></script>
+<script type="text/javascript" charset="utf-8"
+	th:src="@{http://cdn.datatables.net/1.10.16/js/jquery.dataTables.js}"></script>
+<script>
+	$(document).ready(function() {
+		$('#myTable').DataTable();
+	});
+</script>
+</head>
+<body>
+	<div th:replace="fragments/fragment :: header"></div>
+	<h1>All Students</h1>
+	<table id="myTable" class="display">
+		<thead>
+			<tr>
+				<th>No.</th>
+				<th>NPM</th>
+				<th>Name</th>
+				<th>GPA</th>
+				<th>Cum laude</th>
+				<th>Delete</th>
+				<th>Update</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="student,iterationStatus: ${students}"
+				th:class="${iterationStatus.odd}? 'odd'">
+				<td th:text="${iterationStatus.count}">No. 1</td>
+				<td th:text="${student.npm}">Student NPM</td>
+				<td th:text="${student.name}">Student Name</td>
+				<td th:text="${student.gpa}">Student GPA</td>
+				<td
+					th:text="${student.gpa} >= 3.49 ? 'Cum Laude!' : 'Sangat Memuaskan!'">
+					Cum Laude! dan Sangat Memuaskan!</td>
+				<td><a th:href="'/student/delete/' + ${student.npm}">
+						Delete Data</a></td>
+				<td><a th:href="'/student/form-update/' + ${student.npm}">
+						Update Data</a></td>
+			</tr>
+		</tbody>
+	</table>
+	<div>
+		<!--
+		<h3>Kuliah yang diambil</h3>
+			<ul th:each="course,iterationStatus: ${student.courses}">
+				<li th:text="${course.name} + '-' + ${course.credits} + 'sks'">
+					Nama kuliah-X SKS
+				</li>
+			</ul>
+		-->
+	</div>
+</body>
+</html>
